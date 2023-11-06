@@ -18,4 +18,17 @@ async function connect() {
     }
 }
 
-module.exports = {connect}
+async function getAllListings(client) {
+    //pobieramy sobie wybraną kolekcję danych z bazy
+    const collection = await client.db('sample_airbnb').collection('listingsAndReviews');
+    //tworzymy listę (tablicę) danych za pomocą pustej kwerendy find
+    let list = collection.find().toArray();
+    return list;
+}
+
+function close(client) {
+    client.close();
+    console.log("Successfully disconnected from MongoDB");
+}
+
+module.exports = {connect, getAllListings, close}
